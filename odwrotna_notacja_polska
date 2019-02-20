@@ -1,0 +1,203 @@
+/**
+*Problem link:https://www.hackerearth.com/practice/basic-programming/implementation/basics-of-implementation/practice-problems/algorithm/odwrotna-notacja-polska-04e51d5a/
+**/
+class polska
+{
+	static String expression;
+	static String stack[];
+	static int index=0;
+	static boolean flag=true;
+	public static boolean sameType(String s,String t)
+	{
+		if(whichType(s)!=whichType(t))
+		{
+			return false;
+		}
+		else
+			return true;
+	}
+	public static int whichType(String s)
+	{
+		if(s.equals("true")||s.equals("false"))
+			return 23;   // 23 for boolean
+		else
+			return 33; // 33 for integer
+	}
+	public static void pushStack(String s)
+	{
+		int t =index;
+		stack[index++]=s;
+		switch(stack[t])
+		{
+			case "+":{
+						if(index==1 || index==2)
+						{
+							System.out.println("SYNTAX ERROR");
+							flag = false;
+							break;
+						}
+						else if(whichType(stack[t-1])==23 || whichType(stack[t-2])==23)
+						{
+							System.out.println("TYPE ERROR");
+						    flag = false;
+							break;
+						}
+						else
+						{
+							int res = Integer.parseInt(stack[t-2])+Integer.parseInt(stack[t-1]);
+							stack[t-2]=res+"";
+							stack[t-1]="";
+							stack[t]="";
+							index=t-1;
+							//System.out.println(stack[t-2]);
+						}
+						break;
+					}
+			case "*":{
+						if(index==1 || index==2)
+						{
+							System.out.println("SYNTAX ERROR");
+							flag = false;
+							break;
+						}
+						else if(whichType(stack[t-1])==23 || whichType(stack[t-2])==23)
+						{
+							System.out.println("TYPE ERROR");
+						    flag = false;
+							break;
+						}
+						else
+						{
+							int res = Integer.parseInt(stack[t-2])*Integer.parseInt(stack[t-1]);
+							stack[t-2]=res+"";
+							stack[t-1]="";
+							stack[t]="";
+							index=t-1;
+							//System.out.println(stack[t-2]);
+						}
+						break;
+					}
+			case "==":{
+						if(index==1 || index==2)
+						{
+							System.out.println("SYNTAX ERROR");
+							flag = false;
+							break;
+						}
+						else if(whichType(stack[t-1])==23 || whichType(stack[t-2])==23)
+						{
+							System.out.println("TYPE ERROR");
+						    flag = false;
+							break;
+						}
+						else
+						{
+							if(Integer.parseInt(stack[t-2])==Integer.parseInt(stack[t-1]))
+							{
+								stack[t-2]=true+"";
+							}
+							else{
+								stack[t-2]=false+"";
+							}
+							stack[t-1]="";
+							stack[t]="";
+							index=t-1;
+							//System.out.println(stack[t-2]);
+						}
+						break;
+				
+					}
+			case "or":{
+						if(index==1 || index==2)
+						{
+							System.out.println("SYNTAX ERROR");
+							flag = false;
+							break;
+						}
+						else if(whichType(stack[t-1])==33 || whichType(stack[t-2])==33)
+						{
+							System.out.println("TYPE ERROR");
+						    flag = false;
+							break;
+						}
+						else
+						{
+							if(stack[t-2].equals("true") || stack[t-1].equals("true"))
+							{
+								stack[t-2]=true+"";
+							}
+							else{
+								stack[t-2]=false+"";
+							}
+							stack[t-1]="";
+							stack[t]="";
+							index=t-1;
+							//System.out.println(stack[t-2]);
+						}
+						break;
+				
+					}
+			case "and":{
+						if(index==1 || index==2)
+						{
+							System.out.println("SYNTAX ERROR");
+							flag = false;
+							break;
+						}
+						else if(whichType(stack[t-1])==33 || whichType(stack[t-2])==33)
+						{
+							System.out.println("TYPE ERROR");
+						    flag = false;
+							break;
+						}
+						else
+						{
+							if(stack[t-2].equals("true") && stack[t-1].equals("true"))
+							{
+								stack[t-2]=true+"";
+							}
+							else{
+								stack[t-2]=false+"";
+							}
+							stack[t-1]="";
+							stack[t]="";
+							index=t-1;
+							//System.out.println(stack[t-2]);
+						}
+						break;
+				
+					}
+					
+		}
+	//index++;
+	/*for(int m=0;m<=index; m++)
+					{
+						System.out.println(stack[m]);
+					}*/
+	}
+	public static void initStack()
+	{
+		stack = new String[100];
+	}
+	public static void main(String args[])
+	{
+		java.util.Scanner in= new java.util.Scanner(System.in);
+		expression = in.nextLine();
+		initStack();
+		//System.out.println(expression);
+		java.util.StringTokenizer st = new java.util.StringTokenizer(expression," ");
+		stack[1]="1";
+		while(st.hasMoreTokens())
+		{
+			String temp = st.nextToken();
+			pushStack(temp);
+			if(!flag)
+				break;
+		}
+		if(flag && index!=1)
+			System.out.println("SYNTAX ERROR");
+		else if(flag)
+			System.out.println(stack[0]);
+	}
+}
+

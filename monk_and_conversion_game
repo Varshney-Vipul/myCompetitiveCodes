@@ -1,0 +1,53 @@
+/**
+*problem-link:https://www.hackerearth.com/practice/basic-programming/implementation/basics-of-implementation/practice-problems/algorithm/monk-and-conversion-game-code-monk/
+**/
+
+#include<iostream>
+using namespace std;
+int main()
+{
+	int testcases;
+	cin>>testcases;
+	int answers[testcases];
+	for(int y=0;y<testcases;y++)
+	{
+		int n;
+		cin>>n;
+		int A[n];
+		int B[n];
+		int d;
+		for(int g=0;g<n;g++)
+		{
+			cin>>A[g];
+		}
+		for(int g=0;g<n;g++)
+		{
+			cin>>B[g];
+		}
+		for(int p=0;p<n-1;p++)
+		{
+			if(A[p]<B[p])
+			{
+				d=B[p]-A[p];
+				A[p+1]-=d;
+			}
+			else if(A[p]>B[p])
+			{
+				d=A[p]-B[p];
+				A[p+1]+=d;
+			}
+		}
+		if(A[n-1]==B[n-1])
+		answers[y]=1;
+		else
+		answers[y]=0;
+	}
+	for(int c=0;c<testcases;c++)
+	{
+		if(answers[c]==0)
+		cout<<"NO"<<endl;
+		else
+		cout<<"YES"<<endl;
+	}
+	return 0;
+}

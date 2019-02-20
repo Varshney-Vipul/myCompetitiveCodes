@@ -1,0 +1,54 @@
+/**
+*problem-link : https://www.hackerearth.com/practice/basic-programming/implementation/basics-of-implementation/practice-problems/algorithm/confusion-1/
+**/
+
+#include<iostream>
+using namespace std;
+int main()
+{
+	int n;
+	int q;
+	cin>>n;
+	cin>>q;
+	int arr[n]={0};
+	int max=0;
+//	int result[100001]={0};
+	for(int k=0;k<n;k++)
+	{
+		cin>>arr[k];
+		if(max<arr[k])
+		max=arr[k];
+	}
+	/*for(int k=0;k<n;k++)
+	{
+		cout<<arr[k];
+		
+	}*/
+	
+	int result[max+1]={0};
+	int m=0;
+	for(int c=0;c<q;c++)
+	{
+		cin>>m;
+		int u=0;
+		for(int h=m-1;h<n;h++)
+		{
+			if(result[arr[h]]==0)
+			{
+				result[arr[h]]=1;
+				u++;
+			}
+			
+		}
+		cout<<u<<endl;
+		for(int h=m-1;h<n;h++)
+		{
+			
+				result[arr[h]]=0;
+				
+			
+		}
+		u=0;
+	}
+	return 0;
+}

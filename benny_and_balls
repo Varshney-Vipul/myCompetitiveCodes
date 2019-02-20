@@ -1,0 +1,61 @@
+/**
+*problem-link:https://www.hackerearth.com/practice/basic-programming/implementation/basics-of-implementation/practice-problems/algorithm/benny-and-balls/
+**/
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+	int testCases;
+	cin>>testCases;
+	int numbaskets;//[testCases];
+	int answers[testCases]={0};
+	for(int k=0;k<testCases;k++)
+	{
+		int a;
+		int b;
+		int T;
+		long x1,x2;
+	//	int tbasket;
+		cin>>numbaskets;//[k];
+		//int xvalues[numbaskets[k]];
+		int p[numbaskets];
+		int init[numbaskets]={0};
+		for(int y=0;y<numbaskets;y++)
+		{
+			cin>>p[y];
+		}
+		cin>>x1;
+		cin>>a;
+		cin>>b;
+		cin>>T;
+		if(T==0)
+		{
+			answers[k]=0;
+			continue;
+		}
+		init[(int)x1]++;
+		if(init[(int)x1]==p[(int)x1])
+			{
+				init[(int)x1]=0;
+				answers[k]++;
+			}
+		int l=2;
+		while(l<=T)
+		{
+			x2=((long)(a*x1+b))%numbaskets;
+			x1=x2;
+			init[x2]++;
+			if(init[(int)x2]==p[(int)x2])
+			{
+				init[(int)x2]=0;
+				answers[k]++;
+			}
+			l++;
+		}
+	}
+	for(int h=0;h<testCases;h++)
+	cout<<answers[h]<<endl;
+	return 0;
+}

@@ -1,0 +1,64 @@
+/**
+*problem-link: https://www.hackerearth.com/practice/basic-programming/implementation/basics-of-implementation/practice-problems/algorithm/chocolates-boxes-1/
+**/
+
+#include<iostream>
+using namespace std;
+int main()
+{
+	int testcases;
+	cin>>testcases;
+	for(int h=0;h<testcases;h++)
+	{
+		int n=0;
+		cin>>n;
+		int cs[201]={0};
+		int chocs[n]={0};
+		int req=0;
+		int totalways=0;
+		for(int p=0;p<n;p++)
+		{
+			cin>>chocs[p];
+			cs[chocs[p]]++;
+		}
+	//	for(int y=1;y<101;y++)
+	//	cout<<cs[y]<<"  ";
+	//	cout<<endl;
+		cin>>req;
+		for(int y=1;y<101;y++)
+		{
+			if(cs[y]>0)
+			{
+				if(req>y)
+				{
+					if(req-y==y)
+					{
+						if(cs[y]>1)
+						totalways+=((cs[y])*(cs[y]-1))/2;
+					//	cout<<"here "<<totalways<<endl;
+					}
+					else
+						{
+							totalways+=cs[y]*cs[req-y];
+							cs[y]=0;
+							cs[req-y]=0;
+					//		cout<<"there "<<totalways<<endl;
+						}
+				}
+			}
+			
+		}
+/*		for(int y=0;y<n;y++)
+		{
+			for(int g=y+1;g<n;g++)
+			{
+				if(chocs[y]+chocs[g]==req)
+				{
+					totalways++;
+				}
+			}
+		}*/
+		cout<<totalways<<endl;
+	}
+	return 0;
+}

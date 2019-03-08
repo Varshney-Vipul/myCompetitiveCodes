@@ -8,31 +8,60 @@ public class altf4_and_hackerearth_problem_setting {
         for(int h=0;h<testCases;h++){
             int N = in.nextInt();
             int K = in.nextInt();
-            int MinAmount[] = new int[N];
-            int tasks[] = new int[N];
-            int prices[] = new int[N];
+            int optimumAmount[] = new int[N+1];
+            int tasks[] = new int[N+1];
+            int prices[] = new int[N+1];
+            int howFar[] = new int[N+1];
+            //int positionTask[][] = new int[N][N];
             int totalTasks = 0;
-            for(int j=0;j<N;j++){
+            for(int j=1;j<=N;j++){
                 prices[j] = in.nextInt();
             }
-            for(int j=0;j<N;j++){
+            for(int j=1;j<=N;j++){
                 tasks[j] = in.nextInt();
             }
-            for(int j=0;j<N;j++){
-                totalTasks += tasks[j];
-                if(j==0){
-                    MinAmount[j] = (K + tasks[j]) * prices[j];
-                }else{
-                    int alonePrice = prices[j] * (totalTasks + K);
-                    int otherPrice = MinAmount[j-1] + ((K+tasks[j]) * prices[j]);
-                    if(alonePrice <  otherPrice ){
-                        MinAmount[j] = alonePrice;
-                    } else {
-                        MinAmount[j] = otherPrice;
+            for(int j=1;j<N;j++){
+                int sameProMoney = (tasks[j] + K) * prices[j];
+                howFar[j] = j;
+                for(int i=j+1;i<=N;i++){
+                    if(sameProMoney > (tasks[j] * prices[i])){
+                        //System.out.println("set");
+                        howFar[j] = i;
+                    }else{
+                        break;
                     }
                 }
             }
-            System.out.println(MinAmount[N-1]);
+            for(int u=1;u<=N;u++){  
+                System.out.println("tasks: "+tasks[u]+" --- K: "+K+" -- prices: " + prices[u]);
+                int lastManJob = (tasks[u] + K) * prices[u];
+                // if(u==0){
+                //     optimumAmount[u] = lastManJob;
+                // }
+                System.out.println("N value:  " + u + " -------lastmanjob::" + lastManJob);
+                for(int y=u-1;y>=0;y--){
+                    System.out.println("how far value for y: " + y + " and how far value: "+ howFar[y]);
+                    if(howFar[y] >= u){
+                        System.out.println("here");
+                        int tempMoney = lastManJob + (prices[u] * tasks[y]);
+                        System.out.println("tempmoney : "+tempMoney+"  -- optimunamount y-1 : " + optimumAmount[y-1] + " -- optimunamount y :" + optimumAmount[y] +" -- lastmanjob: " + lastManJob );
+                        if( (optimumAmount[y] + lastManJob) > (optimumAmount[y-1] + tempMoney)){
+                            optimumAmount[u] =  optimumAmount[y-1] + tempMoney;
+                            lastManJob +=  (prices[u] * tasks[y]);  
+                        }else{
+                            optimumAmount[u] = optimumAmount[y] + lastManJob;
+                            break;
+                        }
+                    }else{
+                        System.out.println("there");
+                         System.out.println(   " -- optimunamount y :" + optimumAmount[y] +" -- lastmanjob: " + lastManJob );
+                       
+                        optimumAmount[u] = optimumAmount[y] + lastManJob;
+                        break;
+                    } 
+                }
+            }
+            System.out.println(optimumAmount[N]);
         }   
     }
 }
